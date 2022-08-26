@@ -2,7 +2,7 @@
 #include"kernel/stat.h"
 #include"user/user.h"
 
-#define maxnum 100
+#define maxnum 35
 
 // int prime(int p[], int count){
 //     int number;
@@ -65,7 +65,7 @@ void prime(int *fd){
         exit(1);
     }
 
-    printf("prime: %d\n", p);
+    printf("prime %d\n", p);
 
     if(read(fd[0], &m, 4)){
         int fd1[2];
