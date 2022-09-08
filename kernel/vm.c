@@ -463,3 +463,19 @@ vmprintlevel(pagetable_t pagetable, int level)
     }
   }
 }
+
+int
+pgaccess(pagetable_t pagetable, uint64 start, int number, uint64 buffer)
+{
+	unsigned int bitmask = 0;
+	for(int i = 0; i < number; i++){
+		pte_t *pte = walk(pagetable, start+i*PGSIZE, 0);		
+		if(*pte & PTE_A){
+			bitmask |= 1L << i;
+			*pte &= ~PTE_A;
+		}
+	}	
+	if(copyout(pagetable, buffer, (char*)&bitmask, sizeof(bitmask))<0)
+		return -1;
+	return 0;
+}
